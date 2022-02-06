@@ -1,12 +1,28 @@
-import React from 'react';
-import {Paper, Divider, Button, List, Tabs, Tab} from '@mui/material';
+import React, {useState} from 'react';
+import {Paper, Divider, Button, List, Tabs, Tab, ListItem} from '@mui/material';
 import {AddField} from './components/AddField';
 import {Item} from './components/Item';
 
+function reducer(state, action) {
+    if (action.type === 'ADD_TASK') {
+        return [
+            ...state,
+            {
+                id: state.length !== 0 ? state[state.length - 1].id + 1 : 1,
+                text: action.payload.text,
+                completed: action.payload.complete
+            }
+        ]
+    }
+    if (action.type === 'DELETE_TASK') {
+        return [
+            ...state.filter(obj => obj.id !== action.payload.id)
+        ]
+    }
+    return state;
+}
 
 function App() {
-    const [taskText, setTaskText] = React.useState('');
-    const [taskComplete, setTaskComplete] = React.useState(false);
     const [state, dispatch] = React.useReducer(reducer, [{
         id: 1,
         text: 'Тестовая задача',
@@ -19,35 +35,24 @@ function App() {
         },
     ]);
 
-    function reducer(state, action) {
-        console.log(state);
-        if (action.type === 'ADD_TASK') {
-            return [
-                ...state,
-                {
-                    id: state[state.length - 1].id + 1,
-                    text: taskText,
-                    completed: taskComplete
-                }
-            ]
-        }
-        return state;
-    }
 
-    const addTask = async () => {
-        await dispatch({
-            type: 'ADD_TASK'
+    const addTask = (text, complete) => {
+        dispatch({
+            type: 'ADD_TASK',
+            payload: {
+                text,
+                complete
+            }
         });
-        setTaskText('');
-        setTaskComplete(false);
     }
 
-    const changeTaskText = (e) => {
-        setTaskText(e.target.value);
-    }
-
-    const changeTaskComplete = () => {
-        setTaskComplete(!taskComplete);
+    const deleteTask = (id) => {
+        dispatch({
+            type: 'DELETE_TASK',
+            payload: {
+                id
+            }
+        });
     }
 
     return (
@@ -56,8 +61,7 @@ function App() {
                 <Paper className="header" elevation={0}>
                     <h4>Список задач</h4>
                 </Paper>
-                <AddField changeTaskComplete={changeTaskComplete} addTask={addTask} taskComplete={taskComplete}
-                          taskText={taskText} changeTaskChange={changeTaskText}/>
+                <AddField addTask={addTask} />
                 <Divider/>
                 <Tabs value={0}>
                     <Tab label="Все"/>
@@ -68,7 +72,7 @@ function App() {
                 <List>
                     {
                         state.map(obj => (
-                            <Item key={obj.id} text={obj.text} completed={obj.completed}/>
+                            <Item key={obj.id} id={obj.id} text={obj.text} completed={obj.completed} deleteTask={deleteTask}/>
                         ))
                     }
                 </List>
