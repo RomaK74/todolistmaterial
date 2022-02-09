@@ -20,8 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3c592bc-c4e6-4034-bcda-6daf463b89e0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AddField.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddField.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Item.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Item.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +49,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../dipl/frontend/src/store/ducks/marks/reducer.js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../newspaper" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -70,7 +70,9 @@
       <updated>1644007302628</updated>
       <workItem from="1644007303749" duration="3678000" />
       <workItem from="1644011059817" duration="2346000" />
-      <workItem from="1644070608374" duration="9830000" />
+      <workItem from="1644070608374" duration="10566000" />
+      <workItem from="1644160277091" duration="5540000" />
+      <workItem from="1644261030406" duration="23000" />
     </task>
     <servers />
   </component>
@@ -87,16 +89,17 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="570" y="252" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1644086544948">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="570" y="252" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1644086544948" />
-    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1644085861910">
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1644261051881">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1644085861910" />
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1644261051881" />
     <state x="923" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1644009607885">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>

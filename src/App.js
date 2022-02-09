@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Paper, Divider, Button, List, Tabs, Tab, ListItem} from '@mui/material';
+import React from 'react';
+import {Paper, Divider, Button, List, Tabs, Tab} from '@mui/material';
 import {AddField} from './components/AddField';
 import {Item} from './components/Item';
 
@@ -16,8 +16,38 @@ function reducer(state, action) {
     }
     if (action.type === 'DELETE_TASK') {
         return [
-            ...state.filter(obj => obj.id !== action.payload.id)
+            ...state.filter(obj => obj.id !== action.payload)
         ]
+    }
+    if (action.type === 'TOGGLE_COMPLETED') {
+        return state.map(obj => {
+            if (obj.id === action.payload) {
+                return {
+                    ...obj,
+                    completed: !obj.completed
+                }
+            } else
+                return obj;
+        })
+    }
+    if (action.type === 'TOGGLE_ALL') {
+        const isCompleted = state.find(obj => !obj.completed);
+        return state.map(obj => {
+                if (isCompleted) {
+                    return {
+                        ...obj,
+                        completed: true,
+                    }
+                } else
+                    return {
+                        ...obj,
+                        completed: false,
+                    }
+            }
+        )
+    }
+    if (action.type === 'DELETE_ALL') {
+        return [];
     }
     return state;
 }
@@ -35,6 +65,17 @@ function App() {
         },
     ]);
 
+    const [sort, setSort] = React.useState(0);
+    const [toggleLabel, setToggleLabel] = React.useState('');
+
+    React.useEffect(() => {
+        if (state && state.find(obj => obj.completed === false)) {
+            setToggleLabel('Отметить все')
+        }
+        else {
+            setToggleLabel('Снять отметки')
+        }
+    }, [state]);
 
     const addTask = (text, complete) => {
         dispatch({
@@ -49,9 +90,28 @@ function App() {
     const deleteTask = (id) => {
         dispatch({
             type: 'DELETE_TASK',
-            payload: {
-                id
-            }
+            payload: id
+        });
+    }
+
+    const deleteAll = () => {
+        if (window.confirm('Удалить все задачи?')) {
+            dispatch({
+                type: 'DELETE_ALL',
+            });
+        }
+    }
+
+    const toggleCompleted = (id) => {
+        dispatch({
+            type: 'TOGGLE_COMPLETED',
+            payload: id
+        });
+    }
+
+    const toggleAll = () => {
+        dispatch({
+            type: 'TOGGLE_ALL',
         });
     }
 
@@ -61,25 +121,52 @@ function App() {
                 <Paper className="header" elevation={0}>
                     <h4>Список задач</h4>
                 </Paper>
-                <AddField addTask={addTask} />
+                <AddField addTask={addTask}/>
                 <Divider/>
-                <Tabs value={0}>
-                    <Tab label="Все"/>
-                    <Tab label="Активные"/>
-                    <Tab label="Завершённые"/>
+                <Tabs value={sort}>
+                    <Tab label="Все" onClick={() => setSort(0)}/>
+                    <Tab label="Активные" onClick={() => setSort(1)}/>
+                    <Tab label="Завершённые" onClick={() => setSort(2)}/>
                 </Tabs>
                 <Divider/>
                 <List>
                     {
-                        state.map(obj => (
-                            <Item key={obj.id} id={obj.id} text={obj.text} completed={obj.completed} deleteTask={deleteTask}/>
+                        sort === 0 && state.map(obj => (
+                            <Item key={obj.id}
+                                  id={obj.id}
+                                  text={obj.text}
+                                  completed={obj.completed}
+                                  toggleCompleted={toggleCompleted}
+                                  deleteTask={deleteTask}/>
+                        ))
+                    }
+                    {
+                        sort === 1 && state.filter(obj => !obj.completed).map(obj => (
+                            <Item key={obj.id}
+                                  id={obj.id}
+                                  text={obj.text}
+                                  completed={obj.completed}
+                                  toggleCompleted={toggleCompleted}
+                                  deleteTask={deleteTask}/>
+                        ))
+                    }
+                    {
+                        sort === 2 && state.filter(obj => obj.completed).map(obj => (
+                            <Item key={obj.id}
+                                  id={obj.id}
+                                  text={obj.text}
+                                  completed={obj.completed}
+                                  toggleCompleted={toggleCompleted}
+                                  deleteTask={deleteTask}/>
                         ))
                     }
                 </List>
                 <Divider/>
                 <div className="check-buttons">
-                    <Button>Отметить всё</Button>
-                    <Button>Очистить</Button>
+                    <Button onClick={toggleAll}>
+                        {toggleLabel}
+                    </Button>
+                    <Button onClick={deleteAll}>Очистить</Button>
                 </div>
             </Paper>
         </div>
